@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navbar Example</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="manifest" href="favicons/site.webmanifest">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="js/HTMLMenuUE4Connector.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="tab active" onclick="selectTab(event, 'uBuild')">uBuild</div>
+        <div class="tab" onclick="selectTab(event, 'uConfig')">uConfig</div>
+        <div class="tab" onclick="selectTab(event, 'uMonitor')">uMonitor</div>
+    </div>
+
+    <div id="uBuild" class="content active">
+        <div class="sub-navbar">
+            <div class="sub-tab active" id="Build-Tab" onclick="disableFormSection('Edit'); enableFormSection('Build'); selectSubTab(event, 'Build');">
+                Build
+            </div>
+            <div class="sub-tab" id="Edit-Tab" onclick="disableFormSection('Build'); enableFormSection('Edit'); selectSubTab(event, 'Edit');">
+                Edit
+            </div>
+        </div>
+
+        <div class="uSection">
+            <div id="Build" class="sub-content">
+                <h1>Build Settings</h1>
+                <form id="buildSettingsForm">
+                    <section>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="screensName">Screens Name</label>
+                                <input type="text" id="screensName" placeholder="Insert here your screens name (E.g. Screen1)" />
+                            </div>
+                            <div class="form-group">
+                                <label for="screensFolderPath">Screens Folder Path</label>
+                                <input type="text" id="screensFolderPath" placeholder="Insert here your screens folder path" value="/Game/" />
+                                <label class="file-upload-container" style="display: inline-block;">
+                                    <input type="button" id="uBuildScreensFolderPath" onclick="OpenFolderPath('Build')" style="display: none;" />
+                                    <span class="file-upload-button">...</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Screens Number</label>
+                                <input type="number" id="screensNumberHorizontal" placeholder="Horizontal" />
+                                <input type="number" id="screensNumberVertical" placeholder="Vertical" />
+                            </div>
+                            <div class="form-group">
+                                <label>First Screen Location</label>
+                                <input type="number" id="firstScreenX" placeholder="X Axis" />
+                                <input type="number" id="firstScreenY" placeholder="Y Axis" />
+                                <input type="number" id="firstScreenZ" placeholder="Z Axis" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group" id="screenOffsets">
+                                <label>Screen Offset</label>
+                                <input type="number" id="ScreenOffsetX" placeholder="X Axis" />
+                                <input type="number" id="ScreenOffsetY" placeholder="Y Axis" />
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="snapScreens">Snap Screens</label>
+                                        <input type="checkbox" id="snapScreens" name="snapScreens" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="emptyFolder">Empty Folder</label>
+                                        <input type="checkbox" id="emptyFolder" name="emptyFolder" />
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <h2>Screens Properties</h2>
+                    <section>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Screens Tiles Number</label>
+                                <input type="number" id="screensTilesNumberHorizontal" placeholder="Horizontal Num" />
+                                <input type="number" id="screensTilesNumberVertical" placeholder="Vertical Num" />
+                            </div>
+                            <div class="form-group">
+                                <label for="screensTilesWidth">Screens Tiles Size (Width in cm)</label>
+                                <input type="number" id="screensTilesWidth" placeholder="Width (in cm)" />
+                                <input type="number" id="screensTilesHeight" placeholder="Height (in cm)" />
+                            </div>
+                        </div>
+                        <div class=" form-row">
+                            <div class="form-group">
+                                <label>Screens Tiles Pixels</label>
+                                <input type="number" id="screensTilesPixelsHorizontal" placeholder="Width (in px)" />
+                                <input type="number" id="screensTilesPixelVertical" placeholder="Height (in px)" />
+                            </div>
+                            <div class="form-group">
+                                <label>Screens Tiles Angle</label>
+                                <input type="number" id="screensTilesAngle" placeholder="Angle (in deg)" />
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <h2>Ceiling Properties</h2>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="buildCeiling">Build Ceiling</label>
+                                <input type="checkbox" id="buildCeiling" name="buildCeiling" />
+                            </div>
+                        </div>
+                    </div>
+                    <section style="border-bottom: none">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ceiling Tiles Number</label>
+                                <input type="number" id="ceilingTilesNumberHorizontal" placeholder="Horizontal Num" />
+                                <input type="number" id="ceilingTilesNumberVertical" placeholder="Vertical Num" />
+                            </div>
+                            <div class="form-group">
+                                <label>Ceiling Tiles Size </label>
+                                <input type="number" id="ceilingTilesWidth" placeholder="Width (in cm)" />
+                                <input type="number" id="ceilingTilesHeight" placeholder="Height (in cm)" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ceiling Tiles Pixels</label>
+                                <input type="number" id="ceilingTilesPixelsHorizontal" placeholder="Width (in px)" />
+                                <input type="number" id="ceilingTilesPixelVertical" placeholder="Height (in px)" />
+                            </div>
+                           
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Ceiling Tiles Angle </label>
+                                        <input type="number" id="ceilingTilesAngle" placeholder="Angle (in deg)" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ceiling Height </label>
+                                        <input type="number" id="ceilingHeight" placeholder="Height (in cm)" />
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <button type="submit">Build Volume</button>
+                </form>
+            </div>
+            <div id="Edit" class="sub-content">
+                <h2>Edit Build Settings</h2>
+                <form id="editBuildForm">
+                    <section>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Screens Name</label>
+                                <input type="text" id="EditScreensName" placeholder="Insert here your screens name (Es. Screen1)" />
+                            </div>
+                            <div class="form-group">
+                                <label>Screens Number</label>
+                                <input type="number" id="EditScreensNumberHorizontal" placeholder="Horizontal Num." />
+                                <input type="number" id="EditScreensNumberVertical" placeholder="Vertical Num." />
+                            </div>
+                        </div>
+                    </section>
+                    <div id="EditScreenProperties">
+                    <h2>Edit Screens Properties</h2>
+                    <section>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Screens Tiles Number</label>
+                                <input type="number" id="EditScreensTilesNumberHorizontal" placeholder="Horizontal Num." />
+                                <input type="number" id="EditScreensTilesNumberVertical" placeholder="Vertical Num." />
+                            </div>
+                            <div class="form-group">
+                                <label>Screens Tiles Size</label>
+                                <input type="number" id="EditScreensTilesSizeWidth" placeholder="Width (in cm)" />
+                                <input type="number" id="EditScreensTilesSizeHeight" placeholder="Height (in cm)" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Screens Tiles Pixels</label>
+                                <input type="number" id="EditScreensTilesPixelsWidth" placeholder="Width (in px)" />
+                                <input type="number" id="EditScreensTilesPixelsHeight" placeholder="Height (in px)" />
+                            </div>
+                            <div class="form-group">
+                                <label>Screens Tiles Angle</label>
+                                <input type="number" id="EditScreensTilesAngle" placeholder="Angle (in degrees)" />
+                            </div>
+                        </div>
+                    </section>
+                    </div>
+                    <div id="EditCeilingProperties">
+                        <h2>Edit Ceiling Properties</h2>
+                        <div class="section">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Ceiling Tiles Number</label>
+                                    <input type="number" id="EditCeilingTilesNumberHorizontal" placeholder="Horizontal Num." />
+                                    <input type="number" id="EditCeilingTilesNumberVertical" placeholder="Vertical Num." />
+                                </div>
+                                <div class="form-group">
+                                    <label>Ceiling Tiles Size</label>
+                                    <input type="number" id="EditCeilingTilesSizeWidth" placeholder="Width (in cm)" />
+                                    <input type="number" id="EditCeilingTilesSizeHeight" placeholder="Height (in cm)" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Ceiling Tiles Pixels</label>
+                                    <input type="number" id="EditCeilingTilesPixelsWidth" placeholder="Width (in px)" />
+                                    <input type="number" id="EditCeilingTilesPixelsHeight" placeholder="Height (in px)" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Ceiling Height</label>
+                                    <input type="number" id="EditCeilingHeight" placeholder="Z Axis Value (in cm)" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Ceiling Tiles Angle</label>
+                                    <input type="number" id="EditCeilingTilesAngle" placeholder="Angle (in deg)" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="EditTilesReplace">Replace</label>
+                                    <input type="checkbox" id="EditTilesReplace" name="EditTilesReplace" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <button onclick="EditFormRemoveSelected();">Remove Selected</input>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Apply Changes</button>
+                        </div>
+                        </div>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="uConfig" class="content">
+        <div class="sub-navbar">
+            <div class="sub-tab active" id="Create-Tab" onclick="disableFormSection('Spawn'); enableFormSection('Create'); selectSubTab(event, 'Create');">
+                Create
+            </div>
+            <div class="sub-tab" id="Spawn-Tab" onclick="disableFormSection('Create'); enableFormSection('Spawn'); selectSubTab(event, 'Spawn');">
+                Spawn
+            </div>
+        </div>
+
+        <div class="uSection">
+            <div id="Create" class="sub-content">
+                <h1>Config Settings</h1>
+                <form id="configSettingsForm">
+                    <section>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="uConfigName">uConfig Name</label>
+                                <input type="text" id="uConfigName" placeholder="Insert here your uConfig name (Es. uConfig1)" />
+                            </div>
+                            <div class="form-group">
+                                <label>uConfig Folder Path</label>
+                                <input type="text" id="uConfigFolder" placeholder="Insert here your uConfig folder path."  value="/Game/"/>
+                                <label class="file-upload-container" style="display: inline-block;">
+                                    <input type="button" id="uConfigFolderPath" onclick="OpenFolderPath('uConfigFolderPath');" style="display: none;" />
+                                    <span class="file-upload-button">...</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Default Viewpoint Location</label>
+                                <input type="number" id="defaultViewpointX" placeholder="X Axis" />
+                                <input type="number" id="defaultViewpointY" placeholder="Y Axis" />
+                                <input type="number" id="defaultViewpointZ" placeholder="Z Axis" />
+                            </div>
+                            <div class="form-group">
+                                <label for="syncType">Select Sync Type</label>
+                                <select id="syncType" class="select-style">
+                                    <option>Nvidia</option>
+                                    <option>Ethernet</option>
+                                    <option>Default</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <h2>Clusters Properties</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cluster Meshes Folder Path</label>
+                            <input type="text" id="clusterMeshesFolder" placeholder="Insert here your clusters meshes folder path." value="/Game/" />
+                            <label class="file-upload-container" style="display: inline-block;">
+                                <input type="button" id="uClusterMeshesFolderPath" onclick="OpenFolderPath('ClusterMeshesFolder')" style="display: none;" />
+                                <span class="file-upload-button">...</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="clusterIPClass">Clusters IP Class (x.x.x.x)</label>
+                            <input type="text" id="clusterIPClass" placeholder="Insert here IP class (Es. 192.168.1.x)" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Viewports Resolution</label>
+                            <input type="number" id="viewportWidth" placeholder="Width (in px)" />
+                            <input type="number" id="viewportHeight" placeholder="Height (in px)" />
+                        </div>
+                        <div class="form-group">
+                            <label>Windows Resolution</label>
+                            <input type="number" id="windowsWidth" placeholder="Width (in px)" />
+                            <input type="number" id="windowsHeight" placeholder="Height (in px)" />
+                        </div>
+                    </div>
+
+                    <button type="submit">Create Config</button>
+                </form>
+            </div>
+            <div id="Spawn" class="sub-content">
+                <h1>Spawn Config</h1>
+                <form id="spawnConfigForm">
+                    <section>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="spawnUConfigSelect">Select uConfig</label>
+                                <input type="text" id="spawnUConfigSelect" placeholder="Select uConfig file" />
+                                <label class="file-upload-container" style="display: inline-block;">
+                                    <input type="button" id="spawnUConfigSelectFolderPath" onclick="OpenFilePath('uConfig')" style="display: none;" />
+                                    <span class="file-upload-button">...</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="spawnOCIOFilePath">Select OCIO File</label>
+                                <input type="text" id="spawnOCIOFilePath" placeholder="Select OCIO file" />
+                                <label class="file-upload-container" style="display: inline-block;">
+                                    <input type="button" id="spawnUSpawnConfigOCIOFolderPath" onclick="OpenFilePath('OCIO')" style="display: none;" />
+                                    <span class="file-upload-button">...</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>CineCamera Location</label>
+                                <input type="number" id="spawnXAxis" placeholder="X Axis" />
+                                <input type="number" id="spawnYAxis" placeholder="Y Axis" />
+                                <input type="number" id="spawnZAxis" placeholder="Z Axis" />
+                            </div>
+                            <div class="form-group">
+                                <label></label>
+                                <button type="submit" id="spawnCineCameraSettings" onclick=" event.preventDefault(); showPopup('cineCameraSettingsModal');">
+                                    CineCamera Settings
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                    <h2>Config Properties</h2>
+                    <section>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="spawnInnerFrustum">Inner Frustum Screen Percentage</label>
+                                <input type="number" id="spawnInnerFrustum" placeholder="Insert the Inner Frustum Screen Percentage." />
+                            </div>
+                            <div class="form-group">
+                                <label for="spawnEnableInnerFrustum">Enable Inner Frustum</label>
+                                <input type="checkbox" id="spawnEnableInnerFrustum" checked />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="spawnOuterFrustum">Outer Frustum Screen Percentage</label>
+                                <input type="number" id="spawnOuterFrustum" placeholder="Insert the Outer Frustum Screen Percentage." />
+                            </div>
+                            <div class="form-group">
+                                <label for="spawnFreezeOuterFrustum">Freeze Outer Frustum</label>
+                                <input type="checkbox" id="spawnFreezeOuterFrustum" />
+                            </div>
+                        </div>
+                    </section>
+
+                    <h2>Tracking Properties</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="spawnObjectsToTrack">Objects To Track</label>
+                            <input type="number" id="spawnObjectsToTrack" placeholder="Insert the number of objects to track." />
+                        </div>
+                        <div class="form-group">
+                            <label for="spawnTrackingSystem">Select Tracking System</label>
+                            <select id="spawnTrackingSystem" class="select-style">
+                                <option>None</option>
+                                <option>Live FreeD</option>
+                                <option>Opti Track</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="spawnTrackingIPAddress">Tracking IP Address</label>
+                            <input type="text" id="spawnTrackingIPAddress" placeholder="Insert here IP address (Es. 127.0.0.1)" />
+                        </div>
+                    </div>
+
+                    <button type="submit">Spawn Config</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="uMonitor" class="content">
+        <div class="uSection">
+            <div id="Monitor" class="sub-content">
+                <h1>CineCamera Settings</h1>
+                <form id="cineCameraForm">
+                    <section id="monitorCineCameraSection">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Sensor Size</label>
+                                <input type="number" id="monitorHorizontalSize" placeholder="Horizontal Size." />
+                                <input type="number" id="monitorVerticalSize" placeholder="Vertical Size." />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="monitorCameraPreset">Select CineCamera Presets</label>
+                                <select id="monitorCameraPreset" class="select-style">
+                                    <option>Default</option>
+                                    <option>Preset_1</option>
+                                    <option>Preset_2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Focal Length</label>
+                                <input type="number" id="monitorMinFocalLength"step="0.01"  placeholder="Min Focal Length." />
+                                <input type="number" id="monitorMaxFocalLength" step="0.01" placeholder="Max Focal Length." />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="monitorCurrentFocalLength">Current Focal Length</label>
+                                <input type="number" id="monitorCurrentFocalLength" step="0.01" placeholder="Current Focal Length." />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>F Stop</label>
+                                <input type="number" id="monitorMinFStop" step="0.01" placeholder="Min F Stop." />
+                                <input type="number" id="monitorMaxFStop" step="0.01" placeholder="Max F Stop." />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="monitorCurrentAperture">Current Aperture</label>
+                                <input type="number" id="monitorCurrentAperture" step="0.01" placeholder="Current Aperture." />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="monitorFocusMethod">Select Focus Method</label>
+                                <select id="monitorFocusMethod" class="select-style">
+                                    <option>DoNotOverride</option>
+                                    <option>Manual</option>
+                                    <option>Tracking</option>
+                                    <option>Disable</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="monitorManualFocusDistance">Manual Focus Distance</label>
+                                <input type="text" id="monitorManualFocusDistance" placeholder="Manual Focus Distance." />
+                            </div>
+                        </div>
+                        <button onclick="event.preventDefault();monitorApplyCineCameraSettings();">Apply CineCamera Settings</button>
+                        <div class="form-row">
+                        </div>
+                    </section>
+                    
+                    <div id="monitorDisplaySettingsSection">
+                    <h2>uDisplay Settings</h2>
+                    <div class="section ">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="monitorInnerFrustum">Inner Frustum Screen Percentage</label>
+                                <input type="number" id="monitorInnerFrustum" step="0.01" placeholder="Insert the Inner Frustum Screen Percentage" />
+                            </div>
+                            <div class="form-group">
+                                <label for="monitorEnableInnerFrustum">Enable Inner Frustum</label>
+                                <input type="checkbox" id="monitorEnableInnerFrustum" checked />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="monitorOuterFrustum">Outer Frustum Screen Percentage</label>
+                                <input type="number" id="monitorOuterFrustum" step="0.01" placeholder="Insert the Outer Frustum Screen Percentage" />
+                            </div>
+                            <div class="form-group">
+                                <label for="monitorFreezeOuterFrustum">Freeze Outer Frustum</label>
+                                <input type="checkbox" id="monitorFreezeOuterFrustum" checked />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="monitorOverscan">Enable Overscan</label>
+                                <input type="checkbox" id="monitorOverscan" checked />
+                            </div>
+                            <div class="form-group">
+                                <label for="monitorSoftEdge">Inner Frustum Soft Edge</label>
+                                <input type="number" id="monitorSoftEdge_TB" step="0.01" placeholder="Top/Bottom"  style="width: 100px;"/>
+                                <input type="number" id="monitorSoftEdge_LR" step="0.01" placeholder="Left/Right"  style="width: 100px;"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Inner Frustum Overscan</label>
+                                <input type="number" id="monitorInnerFrustumOverscanLeft" step="0.01" placeholder="Left" style="width: 100px;"/>
+                                <input type="number" id="monitorInnerFrustumOverscanRight" step="0.01" placeholder="Right" style="width: 100px;"/>
+                                <input type="number" id="monitorInnerFrustumOverscanTop" step="0.01" placeholder="Top" style="width: 100px;"/>
+                                <input type="number" id="monitorInnerFrustumOverscanBottom" step="0.01" placeholder="Bottom" style="width: 100px;"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Default Viewpoint Location</label>
+                                <input type="number" id="monitorDefaultViewpointX" step="0.01" placeholder="X Axis" />
+                                <input type="number" id="monitorDefaultViewpointY" step="0.01" placeholder="Y Axis" />
+                                <input type="number" id="monitorDefaultViewpointZ" step="0.01" placeholder="Z Axis" />
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="event.preventDefault();monitorApplyDisplaySettings();">Apply Display Settings</button>
+                </div>
+
+                   
+                </form>
+            </div>
+            <div id="Switchboard" class="sub-content" style="width: 40%; margin-right: 10;">
+                <div class="sub-content-header">
+                    <h1>Connections</h1>
+                    <button onclick="showPopup('monitorDeviceModal');" style="min-width: 200px; margin-top: -10px; margin-right: 0px;">Add Devices</button>
+                </div>
+           
+                <div class="form-row">
+                    <table class="connections-table" id="sourceTable">
+                        <thead>
+                          <tr style="background-color: #3e5c767b;">
+                            <th>Source</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-row">
+                    <table class="connections-table" id="subjectTable">
+                        <thead>
+                        <tr>
+                            <th>Subject Name</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                
+            <div class="shortcuts-section">
+                <h2>Shortcuts</h2>
+                <div class="shortcut-buttons">
+                <button onclick="" style="min-width: 200px;">Run Listener On Each Render Node</button>
+                <button onclick="">Run Unspace Control Board</button>
+                </div>
+            </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="cineCameraSettingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closePopup('cineCameraSettingsModal');">&times;</span>
+            <h1>CineCamera Settings</h1>
+            <form id="cineCameraSettingsModalForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sensor Size</label>
+                        <input type="number" id="horizontalSize" placeholder="Horizontal Size." />
+                        <input type="number" id="verticalSize" placeholder="Vertical Size." />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cameraPreset">Select CineCamera Presets</label>
+                        <select id="cameraPreset" class="select-style">
+                            <option>Default</option>
+                            <option>Preset_1</option>
+                            <option>Preset_2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Focal Length</label>
+                        <input type="number" id="minFocalLength" placeholder="Min Focal Length." />
+                        <input type="number" id="maxFocalLength" placeholder="Max Focal Length." />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currentFocalLength">Current Focal Length</label>
+                        <input type="number" id="currentFocalLength" placeholder="Current Focal Length." />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>F Stop</label>
+                        <input type="number" id="minFStop" placeholder="Min F Stop." />
+                        <input type="number" id="maxFStop" placeholder="Max F Stop." />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currentAperture">Current Aperture</label>
+                        <input type="text" id="currentAperture" placeholder="Current Aperture." />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="focusMethod">Select Focus Method</label>
+                        <select id="focusMethod" class="select-style">
+                            <option>DoNotOverride</option>
+                            <option>Manual</option>
+                            <option>Tracking</option>
+                            <option>Disable</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="manualFocusDistance">Manual Focus Distance</label>
+                        <input type="text" id="manualFocusDistance" placeholder="Manual Focus Distance." />
+                    </div>
+                </div>
+
+                <button type="submit">Apply CineCameraSettings</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="monitorDeviceModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closePopup('monitorDeviceModal');">&times;</span>
+            <h1 style="align-self: center;">Add New Device</h1>
+            <form id="cineCameraSettingsModalForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Device</label>
+                        <input type="text" id="AddDeviceName" placeholder="Device Name" />
+                    </div>
+                    <div class="form-group">
+                        <label>IP Address</label>
+                        <input type="text" id="AddIPAddress" placeholder="IP Address" />
+                    </div>
+                </div>
+                
+                <button type="submit" onclick="event.preventDefault(); CreateDevice();">Create Device</button>
+            </form>
+        </div>
+    </div>
+    <script>
+         document.addEventListener('DOMContentLoaded', function () {
+            var snapScreensCheckbox = document.getElementById('snapScreens');
+            var screenOffsetXInput = document.getElementById('ScreenOffsetX');
+            var screenOffsetYInput = document.getElementById('ScreenOffsetY');
+
+            function toggleScreenOffsetInputs() {
+                var isChecked = snapScreensCheckbox.checked;
+                screenOffsetXInput.disabled = isChecked;
+                screenOffsetYInput.disabled = isChecked;
+
+                if(isChecked)
+                {
+                    disableFormSection("screenOffsets");
+                }else{
+                    enableFormSection("screenOffsets");
+                }
+            }
+
+            snapScreensCheckbox.addEventListener('change', toggleScreenOffsetInputs);
+            toggleScreenOffsetInputs();
+
+            const inputField = document.getElementById('screensFolderPath');
+            inputField.addEventListener('input', function() {
+                const defaultPath = '/Game/';
+                const userPath = inputField.value;
+                if (!userPath.startsWith(defaultPath)) {
+                    inputField.value = defaultPath + userPath;
+                }
+            });
+
+            const inputField2 = document.getElementById('uConfigFolder');
+            inputField2.addEventListener('input', function() {
+                const defaultPath = '/Game/';
+                const userPath = inputField2.value;
+                if (!userPath.startsWith(defaultPath)) {
+                    inputField2.value = defaultPath + userPath;
+                }
+            });
+
+            const inputField3 = document.getElementById('clusterMeshesFolder');
+            inputField3.addEventListener('input', function() {
+                const defaultPath = '/Game/';
+                const userPath = inputField3.value;
+                if (!userPath.startsWith(defaultPath)) {
+                    inputField3.value = defaultPath + userPath;
+                }
+            });
+        });
+
+
+        document
+            .getElementById("buildSettingsForm")
+            .addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                const screensName = document.getElementById('screensName').value;
+                const screensFolderPath = document.getElementById('screensFolderPath').value;
+                const screensNumberHorizontal = parseInt(document.getElementById('screensNumberHorizontal').value);
+                const screensNumberVertical = parseInt(document.getElementById('screensNumberVertical').value);
+                const firstScreenX = parseFloat(document.getElementById('firstScreenX').value);
+                const firstScreenY = parseFloat(document.getElementById('firstScreenY').value);
+                const firstScreenZ = parseFloat(document.getElementById('firstScreenZ').value);
+                const screensTilesNumberHorizontal = parseInt(document.getElementById('screensTilesNumberHorizontal').value);
+                const screensTilesNumberVertical = parseInt(document.getElementById('screensTilesNumberVertical').value);
+                const screensTilesWidth = parseFloat(document.getElementById('screensTilesWidth').value);
+                const screensTilesHeight = parseFloat(document.getElementById('screensTilesHeight').value);
+                const screensTilesPixelsHorizontal = parseInt(document.getElementById('screensTilesPixelsHorizontal').value);
+                const screensTilesPixelVertical = parseInt(document.getElementById('screensTilesPixelVertical').value);
+                const screensTilesAngle = parseFloat(document.getElementById('screensTilesAngle').value);
+                const buildCeiling = document.getElementById('buildCeiling').checked;
+                const ceilingTilesNumberHorizontal = parseInt(document.getElementById('ceilingTilesNumberHorizontal').value);
+                const ceilingTilesNumberVertical = parseInt(document.getElementById('ceilingTilesNumberVertical').value);
+                const ceilingTilesWidth = parseFloat(document.getElementById('ceilingTilesWidth').value);
+                const ceilingTilesHeight = parseFloat(document.getElementById('ceilingTilesHeight').value);
+                const ceilingTilesPixelsHorizontal = parseInt(document.getElementById('ceilingTilesPixelsHorizontal').value);
+                const ceilingTilesPixelVertical = parseInt(document.getElementById('ceilingTilesPixelVertical').value);
+                const ceilingTilesAngle = parseFloat(document.getElementById('ceilingTilesAngle').value);
+                const ceilingHeight = parseFloat(document.getElementById('ceilingHeight').value);
+                var ScreenOffsetX = parseFloat(document.getElementById('ScreenOffsetX').value);
+                var ScreenOffsetY = parseFloat(document.getElementById('ScreenOffsetY').value);
+                const snapScreens = document.getElementById('snapScreens').checked;
+                const emptyFolder = document.getElementById('emptyFolder').checked;
+
+                if(snapScreens){
+                    ScreenOffsetX = 0.0;
+                    ScreenOffsetY = 0.0;
+                }
+
+                const formData = {
+                    screensName,
+                    screensFolderPath,
+                    screensNumberHorizontal,
+                    screensNumberVertical,
+                    firstScreenX,
+                    firstScreenY,
+                    firstScreenZ,
+                    screensTilesNumberHorizontal,
+                    screensTilesNumberVertical,
+                    screensTilesWidth,
+                    screensTilesHeight,
+                    screensTilesPixelsHorizontal,
+                    screensTilesPixelVertical,
+                    screensTilesAngle,
+                    ScreenOffsetX,
+                    ScreenOffsetY,
+                    snapScreens,
+                    emptyFolder,
+                    buildCeiling,
+                    ceilingTilesNumberHorizontal,
+                    ceilingTilesNumberVertical,
+                    ceilingTilesWidth,
+                    ceilingTilesHeight,
+                    ceilingTilesPixelsHorizontal,
+                    ceilingTilesPixelVertical,
+                    ceilingTilesAngle,
+                    ceilingHeight
+                };
+
+                const formDataJson = JSON.stringify(formData);
+                triggerUE4EventWithTag('BuildMeshForm', formDataJson);
+
+                document.getElementById("buildSettingsForm").reset();
+            });
+
+        document
+            .getElementById('editBuildForm')
+            .addEventListener('submit', function(event) {
+                event.preventDefault();
+                const editScreensName = document.getElementById('EditScreensName').value;
+                const editScreensNumberHorizontal = parseInt(document.getElementById('EditScreensNumberHorizontal').value);
+                const editScreensNumberVertical = parseInt(document.getElementById('EditScreensNumberVertical').value);
+                const editScreensTilesNumberHorizontal = parseInt(document.getElementById('EditScreensTilesNumberHorizontal').value);
+                const editScreensTilesNumberVertical = parseInt(document.getElementById('EditScreensTilesNumberVertical').value);
+                const editScreensTilesSizeWidth = parseFloat(document.getElementById('EditScreensTilesSizeWidth').value);
+                const editScreensTilesSizeHeight = parseFloat(document.getElementById('EditScreensTilesSizeHeight').value);
+                const editScreensTilesPixelsWidth = parseInt(document.getElementById('EditScreensTilesPixelsWidth').value);
+                const editScreensTilesPixelsHeight = parseInt(document.getElementById('EditScreensTilesPixelsHeight').value);
+                const editScreensTilesAngle = parseFloat(document.getElementById('EditScreensTilesAngle').value);
+                const editCeilingTilesNumberHorizontal = parseInt(document.getElementById('EditCeilingTilesNumberHorizontal').value);
+                const editCeilingTilesNumberVertical = parseInt(document.getElementById('EditCeilingTilesNumberVertical').value);
+                const editCeilingTilesSizeWidth = parseFloat(document.getElementById('EditCeilingTilesSizeWidth').value);
+                const editCeilingTilesSizeHeight = parseFloat(document.getElementById('EditCeilingTilesSizeHeight').value);
+                const editCeilingTilesPixelsWidth = parseInt(document.getElementById('EditCeilingTilesPixelsWidth').value);
+                const editCeilingTilesPixelsHeight = parseInt(document.getElementById('EditCeilingTilesPixelsHeight').value);
+                const editCeilingHeight = parseFloat(document.getElementById('EditCeilingHeight').value);
+                const editCeilingTilesAngle = parseFloat(document.getElementById('EditCeilingTilesAngle').value);
+                const editReplace = document.getElementById('EditTilesReplace').checked;
+
+                const formData = {
+                    editScreensName,
+                    editScreensNumberHorizontal,
+                    editScreensNumberVertical,
+                    editScreensTilesNumberHorizontal,
+                    editScreensTilesNumberVertical,
+                    editScreensTilesSizeWidth,
+                    editScreensTilesSizeHeight,
+                    editScreensTilesPixelsWidth,
+                    editScreensTilesPixelsHeight,
+                    editScreensTilesAngle,
+                    editCeilingTilesNumberHorizontal,
+                    editCeilingTilesNumberVertical,
+                    editCeilingTilesSizeWidth,
+                    editCeilingTilesSizeHeight,
+                    editCeilingTilesPixelsWidth,
+                    editCeilingTilesPixelsHeight,
+                    editCeilingHeight,
+                    editCeilingTilesAngle,
+                    editReplace
+                };
+
+                const formDataJson = JSON.stringify(formData);
+                triggerUE4EventWithTag('editBuildForm', formDataJson);
+
+                document.getElementById("editBuildForm").reset();
+            });
+
+        document
+            .getElementById('configSettingsForm')
+            .addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const uConfigName = document.getElementById('uConfigName').value;
+                const uConfigFolder = document.getElementById('uConfigFolder').value;
+                const defaultViewpointX = parseFloat(document.getElementById('defaultViewpointX').value);
+                const defaultViewpointY = parseFloat(document.getElementById('defaultViewpointY').value);
+                const defaultViewpointZ = parseFloat(document.getElementById('defaultViewpointZ').value);
+                const syncType = document.getElementById('syncType').value;
+                const clusterMeshesFolder = document.getElementById('clusterMeshesFolder').value;
+                const clusterIPClass = document.getElementById('clusterIPClass').value;
+                const viewportWidth = parseInt(document.getElementById('viewportWidth').value);
+                const viewportHeight = parseInt(document.getElementById('viewportHeight').value);
+                const windowsWidth = parseInt(document.getElementById('windowsWidth').value);
+                const windowsHeight = parseInt(document.getElementById('windowsHeight').value);
+
+                const formData = {
+                    uConfigName,
+                    uConfigFolder,
+                    defaultViewpointX,
+                    defaultViewpointY,
+                    defaultViewpointZ,
+                    syncType,
+                    clusterMeshesFolder,
+                    clusterIPClass,
+                    viewportWidth,
+                    viewportHeight,
+                    windowsWidth,
+                    windowsHeight
+                };
+
+                const formDataJson = JSON.stringify(formData);
+                triggerUE4EventWithTag('configSettingsForm', formDataJson);
+
+                document.getElementById("configSettingsForm").reset();
+            });
+
+        document
+            .getElementById('spawnConfigForm')
+            .addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const spawnUConfigSelect = document.getElementById('spawnUConfigSelect').value;
+                const spawnOCIOFilePath = document.getElementById('spawnOCIOFilePath').value;
+                const spawnXAxis = parseFloat(document.getElementById('spawnXAxis').value);
+                const spawnYAxis = parseFloat(document.getElementById('spawnYAxis').value);
+                const spawnZAxis = parseFloat(document.getElementById('spawnZAxis').value);
+                const spawnInnerFrustum = parseFloat(document.getElementById('spawnInnerFrustum').value);
+                const spawnEnableInnerFrustum = document.getElementById('spawnEnableInnerFrustum').checked;
+                const spawnOuterFrustum = parseFloat(document.getElementById('spawnOuterFrustum').value);
+                const spawnFreezeOuterFrustum = document.getElementById('spawnFreezeOuterFrustum').checked;
+                const spawnObjectsToTrack = parseInt(document.getElementById('spawnObjectsToTrack').value);
+                const spawnTrackingSystem = document.getElementById('spawnTrackingSystem').value;
+                const spawnTrackingIPAddress = document.getElementById('spawnTrackingIPAddress').value;
+
+
+                const formData = {
+                    spawnUConfigSelect,
+                    spawnOCIOFilePath,
+                    spawnUSpawnConfigOCIOFolderPath,
+                    spawnXAxis,
+                    spawnYAxis,
+                    spawnZAxis,
+                    spawnInnerFrustum,
+                    spawnEnableInnerFrustum,
+                    spawnOuterFrustum,
+                    spawnFreezeOuterFrustum,
+                    spawnObjectsToTrack,
+                    spawnTrackingSystem,
+                    spawnTrackingIPAddress
+                };
+                const formDataJson = JSON.stringify(formData);
+                triggerUE4EventWithTag('spawnConfigForm', formDataJson);
+
+                document.getElementById("spawnConfigForm").reset();
+                document.getElementById("cineCameraSettingsModalForm").reset();
+               
+            });
+
+            function monitorApplyCineCameraSettings(){
+                const monitorHorizontalSize = parseFloat(document.getElementById('monitorHorizontalSize').value);
+                const monitorVerticalSize = parseFloat(document.getElementById('monitorVerticalSize').value);
+                const monitorCameraPreset = document.getElementById('monitorCameraPreset').value;
+                const monitorMinFocalLength = parseFloat(document.getElementById('monitorMinFocalLength').value);
+                const monitorMaxFocalLength = parseFloat(document.getElementById('monitorMaxFocalLength').value);
+                const monitorCurrentFocalLength = parseFloat(document.getElementById('monitorCurrentFocalLength').value);
+                const monitorMinFStop = parseFloat(document.getElementById('monitorMinFStop').value);
+                const monitorMaxFStop = parseFloat(document.getElementById('monitorMaxFStop').value);
+                const monitorCurrentAperture = document.getElementById('monitorCurrentAperture').value;
+                const monitorFocusMethod = document.getElementById('monitorFocusMethod').value;
+                const monitorManualFocusDistance = parseFloat(document.getElementById('monitorManualFocusDistance').value);
+    
+                const formData = {
+                    monitorHorizontalSize,
+                    monitorVerticalSize,
+                    monitorCameraPreset,
+                    monitorMinFocalLength,
+                    monitorMaxFocalLength,
+                    monitorCurrentFocalLength,
+                    monitorMinFStop,
+                    monitorMaxFStop,
+                    monitorCurrentAperture,
+                    monitorFocusMethod,
+                    monitorManualFocusDistance
+            
+                };
+                const formDataJson = JSON.stringify(formData);
+                triggerUE4EventWithTag('monitorCineCameraForm', formDataJson);
+
+                document.getElementById("monitorCineCameraForm").reset();
+            }
+
+            function monitorApplyDisplaySettings(){
+                const monitorInnerFrustum = parseFloat(document.getElementById('monitorInnerFrustum').value);
+                const monitorEnableInnerFrustum = document.getElementById('monitorEnableInnerFrustum').checked;
+                const monitorOuterFrustum = parseFloat(document.getElementById('monitorOuterFrustum').value);
+                const monitorFreezeOuterFrustum = document.getElementById('monitorFreezeOuterFrustum').checked;
+                const monitorOverscan = document.getElementById('monitorOverscan').checked;
+                const monitorSoftEdge_TB = parseFloat(document.getElementById('monitorSoftEdge_TB').value);
+                const monitorSoftEdge_LR = parseFloat(document.getElementById('monitorSoftEdge_LR').value);
+                const monitorInnerFrustumOverscanLeft = parseFloat(document.getElementById('monitorInnerFrustumOverscanLeft').value);
+                const monitorInnerFrustumOverscanRight = parseFloat(document.getElementById('monitorInnerFrustumOverscanRight').value);
+                const monitorInnerFrustumOverscanTop = parseFloat(document.getElementById('monitorInnerFrustumOverscanTop').value);
+                const monitorInnerFrustumOverscanBottom = parseFloat(document.getElementById('monitorInnerFrustumOverscanBottom').value);
+                const monitorDefaultViewpointX = parseFloat(document.getElementById('monitorDefaultViewpointX').value);
+                const monitorDefaultViewpointY = parseFloat(document.getElementById('monitorDefaultViewpointY').value);
+                const monitorDefaultViewpointZ = parseFloat(document.getElementById('monitorDefaultViewpointZ').value);
+
+                const formData = {
+                    monitorInnerFrustum,
+                    monitorEnableInnerFrustum,
+                    monitorOuterFrustum,
+                    monitorFreezeOuterFrustum,
+                    monitorOverscan,
+                    monitorSoftEdge_TB,
+                    monitorSoftEdge_LR,
+                    monitorInnerFrustumOverscanLeft,
+                    monitorInnerFrustumOverscanRight,
+                    monitorInnerFrustumOverscanTop,
+                    monitorInnerFrustumOverscanBottom,
+                    monitorDefaultViewpointX,
+                    monitorDefaultViewpointY,
+                    monitorDefaultViewpointZ,
+                };
+                const formDataJson = JSON.stringify(formData);
+                triggerUE4EventWithTag('monitorDisplayForm', formDataJson);
+
+                document.getElementById("monitorDisplayForm").reset();
+            }
+
+        document
+            .getElementById('cineCameraSettingsModalForm')
+            .addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const horizontalSize = parseFloat(document.getElementById('horizontalSize').value);
+                const verticalSize = parseFloat(document.getElementById('verticalSize').value);
+                const cameraPreset = document.getElementById('cameraPreset').value;
+                const minFocalLength = parseFloat(document.getElementById('minFocalLength').value);
+                const maxFocalLength = parseFloat(document.getElementById('maxFocalLength').value);
+                const currentFocalLength = parseFloat(document.getElementById('currentFocalLength').value);
+                const minFStop = parseFloat(document.getElementById('minFStop').value);
+                const maxFStop = parseFloat(document.getElementById('maxFStop').value);
+                const currentAperture = document.getElementById('currentAperture').value;
+                const focusMethod = document.getElementById('focusMethod').value;
+                const manualFocusDistance = document.getElementById('manualFocusDistance').value;
+
+                const formData = {
+                    horizontalSize,
+                    verticalSize,
+                    cameraPreset,
+                    minFocalLength,
+                    maxFocalLength,
+                    currentFocalLength,
+                    minFStop,
+                    maxFStop,
+                    currentAperture,
+                    focusMethod,
+                    manualFocusDistance
+                };
+
+                const formDataJson = JSON.stringify(formData);
+                triggerUE4EventWithTag('cineCameraSettingsModalForm', formDataJson);
+            });
+
+        document
+            .getElementById('uConfigFolderPath')
+            .addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    console.log('File name:', file.name);
+                    console.log('File size:', file.size);
+                }
+            });
+
+        document
+            .getElementById('uBuildScreensFolderPath')
+            .addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    console.log('File name:', file.name);
+                    console.log('File size:', file.size);
+                }
+            });
+
+        document
+            .getElementById('spawnUSpawnConfigOCIOFolderPath')
+            .addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    console.log('File name:', file.name);
+                    console.log('File size:', file.size);
+                }
+            });
+
+        document
+            .getElementById('uClusterMeshesFolderPath')
+            .addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    console.log('File name:', file.name);
+                    console.log('File size:', file.size);
+                }
+            });
+
+       
+        function ToggleEditScreenPropertiesState(isEnabled){
+            if(isEnabled)
+            {
+                enableFormSection('EditScreenProperties');
+            }else{
+                disableFormSection('EditScreenProperties');
+            }
+        }
+
+        function ToggleEditCeilingPropertiesState(isEnabled){
+            if(isEnabled)
+            {
+                enableFormSection('EditCeilingProperties');
+            }else{
+                disableFormSection('EditCeilingProperties');
+            }
+        }
+
+
+
+        function selectTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            subNavbar = document.querySelector(".sub-navbar");
+            if (tabName === "uBuild" || tabName === "uConfig") {
+                subNavbar.style.display = "flex";
+            } else {
+                subNavbar.style.display = "none";
+            }
+
+            if(tabName === "uMonitor"){
+                console.log("uMonitor");
+                ClearMonitorConnections();
+                triggerUE4EventWithTag('FetchMonitorConnections', '');
+            }
+
+            console.log(tabName);
+            triggerUE4EventWithTag('FeatureTabSelected', tabName);
+        }
+
+        function selectSubTab(evt, subTabName) {
+            var i, subContent, subTabs;
+
+            subTabs = document.getElementsByClassName("sub-tab");
+            for (i = 0; i < subTabs.length; i++) {
+                subTabs[i].className = subTabs[i].className.replace(" active", "");
+            }
+
+            document.getElementById(subTabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            if (subTabName === "Build") {
+                console.log("Build");
+            } else
+            if (subTabName === "Edit") {
+                console.log("Edit");
+            }
+            if (subTabName === "Create") {
+                console.log("Create");
+            }
+            if (subTabName === "Spawn") {
+                console.log("Spawn");
+            }
+
+            triggerUE4EventWithTag('FeatureSubTabSelected',subTabName)
+        }
+
+        function disableFormSection(sectionId) {
+            var section = document.getElementById(sectionId);
+            if (!section) return;
+
+            var elements = section.querySelectorAll("input, button, select, textarea, a");
+            elements.forEach(function(element) {
+                element.classList.add("disabled-style");
+                element.disabled = true;
+                if (element.tagName.toLowerCase() === "a") {
+                    element.classList.add("disabled-link");
+                    element.setAttribute("tabindex", "-1");
+                    element.style.pointerEvents = "none";
+                }
+            });
+
+            var elements = section.querySelectorAll("label, h1, h2, p");
+            elements.forEach(function(element) {
+                element.classList.add("disabled-style");
+                element.disabled = true;
+                if (element.tagName.toLowerCase() === "a") {
+                    element.classList.add("disabled-link");
+                    element.setAttribute("tabindex", "-1");
+                    element.style.pointerEvents = "none";
+                }
+            });
+
+            toggleTextDisabled(sectionId, true);
+        }
+
+        function enableFormSection(sectionId) {
+            var section = document.getElementById(sectionId);
+            if (!section) return;
+
+            var elements = section.querySelectorAll("input, button, select, textarea, a");
+            elements.forEach(function(element) {
+                element.classList.remove("disabled-style");
+                element.disabled = false;
+
+
+
+                if (element.tagName.toLowerCase() === "a") {
+                    element.classList.remove("disabled-link");
+                }
+            });
+            toggleTextDisabled(sectionId, false);
+        }
+
+        function toggleTextDisabled(sectionId, disable) {
+            var section = document.getElementById(sectionId);
+            if (!section) return;
+
+            var textElements = section.querySelectorAll("label, p, h1, h2");
+            textElements.forEach(function(element) {
+                if (disable) {
+                    element.classList.add("disabled-text");
+                    element.style.opacity = 0.5;
+                } else {
+                    element.classList.remove("disabled-text");
+                    element.classList.add("enabled-style");
+                    element.style.opacity = 1;
+                }
+            });
+        }
+
+        function showPopup(modalID) {
+            var modal = document.getElementById(modalID);
+            modal.style.display = "block";
+        }
+
+        function closePopup(modalID) {
+            var modal = document.getElementById(modalID);
+            modal.style.display = "none";
+        }
+
+        function EditFormRemoveSelected()
+        {
+            triggerUE4EventWithTag('EditFormRemoveSelected');
+        }
+
+        function TestFunction(test,subtabname)
+        {
+            document.getElementById('EditScreensName').textContent = "Hello";
+            disableFormSection(subtabname);
+        }
+
+        function UpdateEditScreenValues(ScreenName,ScreenNum_Horizontal,ScreenNum_Vertical){
+            document.getElementById('EditScreensName').value  = ScreenName;
+            document.getElementById('EditScreensNumberHorizontal').value  = ScreenNum_Horizontal;
+            document.getElementById('EditScreensNumberVertical').value = ScreenNum_Vertical;
+        }
+
+        function UpdateEditWallTileValues(TileSize_Width,TileSize_Height,TilePixels_Width,TilePixels_Height,Tile_Angle,TileNum_Horizontal,TileNum_Vertical){
+            document.getElementById('EditScreensTilesSizeWidth').value = TileSize_Width;
+            document.getElementById('EditScreensTilesSizeHeight').value = TileSize_Height;
+            document.getElementById('EditScreensTilesPixelsWidth').value = TilePixels_Width;
+            document.getElementById('EditScreensTilesPixelsHeight').value = TilePixels_Height;
+            document.getElementById('EditScreensTilesAngle').value = Tile_Angle;
+            document.getElementById('EditScreensTilesNumberHorizontal').value = TileNum_Horizontal;
+            document.getElementById('EditScreensTilesNumberVertical').value =  TileNum_Vertical;
+        }
+
+        function UpdateEditRoofTileValues(TileSize_Width,TileSize_Height,TilePixel_Width,TilePixel_Height,Tile_Angle,TileNum_Horizontal,TileNum_Vertical,Height){
+            document.getElementById('EditCeilingTilesSizeWidth').value = TileSize_Width;
+            document.getElementById('EditCeilingTilesSizeHeight').value = TileSize_Height;
+            document.getElementById('EditCeilingTilesPixelsWidth').value = TilePixel_Width;
+            document.getElementById('EditCeilingTilesPixelsHeight').value = TilePixel_Height;
+            document.getElementById('EditCeilingTilesAngle').value = Tile_Angle;
+            document.getElementById('EditCeilingTilesNumberHorizontal').value= TileNum_Horizontal;
+            document.getElementById('EditCeilingTilesNumberVertical').value = TileNum_Vertical;
+            document.getElementById('EditCeilingHeight').value = Height;
+        }
+
+        function UpdateMonitorCineCameraSettings(monitorHorizontalSize,monitorVerticalSize,monitorCameraPreset,monitorMinFocalLength,monitorMaxFocalLength,monitorCurrentFocalLength,monitorMinFStop,monitorMaxFStop,monitorCurrentAperture,monitorFocusMethod,monitorManualFocusDistance){
+            document.getElementById('monitorHorizontalSize').value = monitorHorizontalSize;
+            document.getElementById('monitorVerticalSize').value = monitorVerticalSize;
+            document.getElementById('monitorCameraPreset').value = monitorCameraPreset;
+            document.getElementById('monitorMinFocalLength').value = monitorMinFocalLength;
+            document.getElementById('monitorMaxFocalLength').value = monitorMaxFocalLength;
+            document.getElementById('monitorCurrentFocalLength').value = monitorCurrentFocalLength;
+            document.getElementById('monitorMinFStop').value = monitorMinFStop;
+            document.getElementById('monitorMaxFStop').value = monitorMaxFStop;
+            document.getElementById('monitorCurrentAperture').value = monitorCurrentAperture;
+            document.getElementById('monitorFocusMethod').value = monitorFocusMethod;
+            document.getElementById('monitorManualFocusDistance').value = monitorManualFocusDistance;
+
+        }
+
+        function ClearCineCameraSettings()
+        {
+            UpdateMonitorCineCameraSettings("","","Default","","","","","","","Disable","");
+        }
+
+        function UpdateMonitorDisplaySettings(monitorInnerFrustum,monitorEnableInnerFrustum,monitorOuterFrustum,monitorFreezeOuterFrustum,monitorOverscan,monitorSoftEdge_TB,monitorSoftEdge_LR,monitorInnerFrustumOverscanLeft,monitorInnerFrustumOverscanRight,monitorInnerFrustumOverscanTop,monitorInnerFrustumOverscanBottom,monitorDefaultViewpointX,monitorDefaultViewpointY,monitorDefaultViewpointZ){
+            document.getElementById('monitorInnerFrustum').value = monitorInnerFrustum;
+            document.getElementById('monitorEnableInnerFrustum').checked = monitorEnableInnerFrustum;
+            document.getElementById('monitorOuterFrustum').value = monitorOuterFrustum;
+            document.getElementById('monitorFreezeOuterFrustum').checked = monitorFreezeOuterFrustum;
+            document.getElementById('monitorOverscan').checked = monitorOverscan;
+            document.getElementById('monitorSoftEdge_TB').value = monitorSoftEdge_TB;
+            document.getElementById('monitorSoftEdge_LR').value = monitorSoftEdge_LR;
+            document.getElementById('monitorInnerFrustumOverscanLeft').value = monitorInnerFrustumOverscanLeft;
+            document.getElementById('monitorInnerFrustumOverscanRight').value = monitorInnerFrustumOverscanRight;
+            document.getElementById('monitorInnerFrustumOverscanTop').value = monitorInnerFrustumOverscanTop;
+            document.getElementById('monitorInnerFrustumOverscanBottom').value = monitorInnerFrustumOverscanBottom;
+            document.getElementById('monitorDefaultViewpointX').value = monitorDefaultViewpointX;
+            document.getElementById('monitorDefaultViewpointY').value = monitorDefaultViewpointY;
+            document.getElementById('monitorDefaultViewpointZ').value = monitorDefaultViewpointZ;
+        }
+
+        function ClearMonitorDisplaySettings()
+        {
+            UpdateMonitorDisplaySettings("",false,"",false,false,"","","","","","","","","");
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById("");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        window.onload = function(event) {
+            disableFormSection('Edit');
+            disableFormSection('Spawn');
+
+
+            document.getElementById("Build-Tab").classList.add("active");
+            document.getElementById("Create-Tab").classList.add("active");
+
+            triggerUE4EventWithTag('FeatureTabSelected', "uBuild");
+            triggerUE4EventWithTag('FeatureSubTabSelected',"Build");
+        };
+        function OpenFolderPath(screenName){
+            if(screenName=='Build'){
+                triggerUE4EventWithTag('buildScreenFolderPath','');
+            }
+            else if(screenName == 'ClusterMeshesFolder'){
+                triggerUE4EventWithTag('ClusterMeshesFolderPath','');
+            }
+            else if(screenName == 'uConfigFolderPath'){
+                triggerUE4EventWithTag('uConfigFolderPath','');
+            }
+        };
+        function OpenFilePath(screenName){
+            if(screenName == 'OCIO'){
+                triggerUE4EventWithTag('ReadOCIOFilePath','');
+            }
+            else if(screenName == 'uConfig'){
+                triggerUE4EventWithTag('ReaduConfigFilePath','');
+            }
+        }
+        function setOCIOFilePath(path){
+            document.getElementById("spawnOCIOFilePath").value = path;
+        }
+        function setBuildScreenFolderPath(path){
+            document.getElementById("screensFolderPath").value = path;
+        }
+        function setBuildClusterMeshesFolderPath(path){
+            document.getElementById("clusterMeshesFolder").value = path;
+        }
+        function setBuildUconfigFolderPath(path){
+            document.getElementById("uConfigFolder").value = path;
+        }
+        function setuConfigFilePath(path){
+        document.getElementById("spawnUConfigSelect").value = path;
+        }
+
+        function clearTableRows(tableId) {
+            const table = document.getElementById(tableId);
+            const tbody = table.querySelector('tbody') || table;
+    
+            tbody.innerHTML = '<tr class="no-data"><td colspan="100%">No data available</td></tr>';
+        }
+
+        function ClearMonitorConnections(){
+            clearTableRows('sourceTable');
+            clearTableRows('subjectTable');
+        }
+
+        function addSourceRow(source, address, status) {
+            const table = document.getElementById('sourceTable');
+            const tbody = table.querySelector('tbody');
+
+            const noDataRow = tbody.querySelector('.no-data');
+            if (noDataRow) {
+                tbody.removeChild(noDataRow);
+            }
+
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td class="source">${source}</td>
+                <td class="address">${address}</td>
+                <td class="status">${status}</td>
+            `;
+        }
+
+        function addSubjectRow(name, role) {
+            const table = document.getElementById('subjectTable');
+            const tbody = table.querySelector('tbody');
+
+            const noDataRow = tbody.querySelector('.no-data');
+            if (noDataRow) {
+                tbody.removeChild(noDataRow);
+            }
+
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${name}</td>
+                <td class="role-transform">${role}</td>
+            `;
+        }
+
+        function CreateDevice(){
+            var DeviceName = document.getElementById('AddDeviceName');
+            var IPaddress = document.getElementById('AddIPAddress');
+
+            var finalstring = DeviceName+":"+IPaddress;
+            triggerUE4EventWithTag('createDevice', finalstring);
+            document.getElementById("monitorDeviceModal").reset();
+
+            triggerUE4EventWithTag('FetchMonitorConnections', '');
+        }
+    </script>
+</body>
+</html>
